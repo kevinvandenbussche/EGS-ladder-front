@@ -4,11 +4,7 @@ import { useEffect, useState} from 'react';
 
 export function CardUser(){
     const entrypoint = 'http://localhost:8000/';
-    const entrypointForToPlay = 'http://localhost:8000';
-
-    const [page, setPage] = useState(1);
     const [users, setUsers] = useState([]);
-    const [pseudo, setPseudo] = useState([]);
     
     useEffect(() =>{
         const url = entrypoint + 'api/data-user-for-main-page';
@@ -19,18 +15,10 @@ export function CardUser(){
         .then(res => res.json())
         .then(
             (result) =>{
-                //thread operator
-                let arrayData = [...users, ...result];
                 setUsers(result);
-                if(result.length === 30){
-                    let pageCopy = page;
-                    setPage(pageCopy += 1); 
-                }
-            }
-           
+            }  
         )
-        
-    }, [page]);    
+    },[]);    
     
 
     console.log(users)
