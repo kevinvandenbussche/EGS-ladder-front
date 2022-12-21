@@ -1,0 +1,15 @@
+@font-face {
+    font-family: rock-salt;
+    src: url(../asset/font/RockSalt-Regular.ttf);
+};
+@font-face {
+    font-family: roboto;
+    src: url(../asset/font/Roboto-Light.ttf);
+}
+
+$font-primary: rock-salt;
+$font-secondary: roboto;
+
+$white: white;
+$pink:#F01BAC;
+

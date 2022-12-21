@@ -1,0 +1,31 @@
+@import '../../asset/variable';
+
+.card-user{
+    border: solid 1px $white;
+    width: 30%;
+    margin-left: 20px;
+    margin-top: 20px;
+    transition: ease 0.2s all;
+    p{
+        font-family: $font-secondary, cursive;
+        padding: 10px;
+        text-align: center;
+        span{
+            font-family: $font-primary;
+        }
+    }
+
+    &:hover{
+        box-shadow: 0px 0px 30px $pink;
+        transform: scale(1.02);
+        background-color: rgba(0, 0, 0, 0.8);
+        
+    }
+}
+
+.title-player{
+    font-family: $font-primary;
+    font-size: 3rem;
+    color:$pink;
+}
+
