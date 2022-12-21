@@ -1,5 +1,6 @@
 
 export function Graph(){
+    
     const entrypoint = 'http://localhost:8000/';
     const [page, setPage] = useState(1);
     const [users, setUsers] = useState([]);
