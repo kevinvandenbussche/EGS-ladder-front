@@ -19,10 +19,6 @@ export function CardUser(){
             }  
         )
     },[]);    
-    
-
-    console.log(users)
-
     return(
         <div className='position-relative-for-other-element'>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
@@ -34,7 +30,6 @@ export function CardUser(){
                                 <p>prenom: <span>&nbsp;{user.firstname}</span></p>
                                 <p>nom: <span>&nbsp;{user.name}</span></p>
                                 <p>pseudo: <span>&nbsp;{user.pseudonyme}</span></p>
-                                <p>jeu:</p>
                             </div>
                             <div className='flex space-arround '>
                                 <p>modifier</p>
