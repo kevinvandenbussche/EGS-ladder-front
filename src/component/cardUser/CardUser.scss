@@ -18,7 +18,7 @@
     &:hover{
         box-shadow: 0px 0px 30px $pink;
         transform: scale(1.02);
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: $backgourndColorPrincipal;
         
     }
 }
