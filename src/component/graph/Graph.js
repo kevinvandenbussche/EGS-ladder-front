@@ -1,11 +1,22 @@
+import { useEffect, useState} from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
 
 export function Graph(){
-    
+    const idUser = 1;
     const entrypoint = 'http://localhost:8000/';
-    const [page, setPage] = useState(1);
-    const [users, setUsers] = useState([]);
+    const [datas, setdatas] = useState([]);
     useEffect(() =>{
-        const url = entrypoint + "api/users/1";
+        const url = entrypoint + 'api/find-elo-by-user/' + idUser;
         fetch( url ,   { headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -13,11 +24,54 @@ export function Graph(){
         .then(res => res.json())
         .then(
             (result) =>{
-                //thread operator
-                let arrayData = [...users, ...result];
-                setUsers(arrayData); 
+                setdatas(result);
             }
         )
+    }, []);
+
+    ChartJS.register(
+        CategoryScale,
+        LinearScale,
+        PointElement,
+        LineElement,
+        Title,
+        Tooltip,
+        Legend
+      );
+     const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+            display:'false',
+            title:'de'
+          },
+          title: {
+            display: true,
+            text: 'Données du joueur',
+            padding:10
+          },
+        },
+      };
+
+      const labels = [];
+      const elo = [];
+      datas.forEach(data => {
+        labels.push(data.dateRegisterElo.date)
+        elo.push(data.elo)
+      });
+      const data = {
+        labels,
+        datasets: [
+          {
+            data: elo,
+            backgroundColor: 'white',
+            borderColor:'white',
+
+        }
+        ],
+      };    
+    return <Line options={options} data={data} />;
         
-    }, [page]);
+        
 }

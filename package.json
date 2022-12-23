@@ -11,8 +11,11 @@
     "@testing-library/user-event": "^13.5.0",
     "api-doc-parser": "^0.2.1",
     "axios": "^1.2.1",
+    "Faker": "^0.7.2",
     "isomorphic-fetch": "^3.0.0",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.1.0",
+    "react-charts": "^3.0.0-beta.51",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.2",
     "react-router": "^6.5.0",
@@ -45,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "faker": "^5.5.3"
   }
 }

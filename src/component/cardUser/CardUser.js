@@ -20,7 +20,7 @@ export function CardUser(){
         )
     },[]);    
     return(
-        <div className='position-relative-for-other-element'>
+        <div>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
             <div className='flex wrap'>
                 {users.map((user)=>{
