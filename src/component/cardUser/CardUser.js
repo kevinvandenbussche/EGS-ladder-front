@@ -1,6 +1,7 @@
 import './CardUser.scss';
 import { useEffect, useState} from 'react';
-
+import { ReactComponent as Edit } from '../../asset/logo/edit.svg';
+import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
 
 export function CardUser(){
     const entrypoint = 'http://localhost:8000/';
@@ -31,9 +32,9 @@ export function CardUser(){
                                 <p>nom: <span>&nbsp;{user.name}</span></p>
                                 <p>pseudo: <span>&nbsp;{user.pseudonyme}</span></p>
                             </div>
-                            <div className='flex space-arround '>
-                                <p>modifier</p>
-                                <p>supprimer</p>
+                            <div className='flex space-arround management-profil'>
+                                <a href='#'><Edit/></a>
+                                <a href='#'><Delete/></a>
                             </div>
                         </div>);  
                     })   
