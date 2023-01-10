@@ -1,0 +1,40 @@
+@import '../../asset/generic';
+
+.container-detail-user{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0; //70%
+    height: 0; //70vh
+    overflow: hidden;
+    background-color: $backgourndColorPrincipal;
+    border: 1px solid $white;
+    box-shadow: 3px 0px 30px $pink;
+}
+
+.modal-open{
+    width: 70%;
+    height: 70vh;
+    z-index: 20;
+}
+
+.picture-profil{
+    width: 10%;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 50px;
+    
+}
+
+.identity{
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+.identity-game{
+    margin-top: 50px;
+}
+
+

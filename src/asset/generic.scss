@@ -1,8 +1,10 @@
-@import 'variable';
+@import 'variable.scss';
+
 *{
     color: $white;
     margin: 0;
     padding: 0;
+    font-family: $font-roboto, cursive;
 }
 
 body{
@@ -41,8 +43,6 @@ body{
     
 }
 
-
-
 .flex{
     display: flex;
 }
@@ -53,6 +53,10 @@ body{
 
 .space-arround{
     justify-content: space-around;
+}
+
+.space-between{
+    justify-content: space-between;
 }
 
 .align-items-center{
@@ -67,3 +71,11 @@ a{
     text-decoration: none;
 }
 
+li{
+    list-style: none;
+}
+
+.img-fluid{
+    width: 100%;
+    height: auto;
+}

@@ -1,4 +1,4 @@
-@import '../../asset/variable';
+@import '../../asset/generic';
 
 .card-user{
     border: solid 2px $white;
@@ -6,12 +6,13 @@
     margin-left: 20px;
     margin-top: 20px;
     transition: ease 0.2s all;
+    cursor: pointer;
     p{
-        font-family: $font-secondary, cursive;
+        font-family: $font-roboto, cursive;
         padding: 10px;
         
         span{
-            font-family: $font-primary;
+            font-family: $font-rock;
         }
     }
     .management-profil{
@@ -37,7 +38,7 @@
 }
 
 .title-player{
-    font-family: $font-primary;
+    font-family: $font-rock;
     font-size: 3rem;
     color:$pink;
 }
