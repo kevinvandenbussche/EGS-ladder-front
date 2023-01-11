@@ -1,0 +1,49 @@
+@import '../../asset/generic';
+
+.load{
+    position: fixed;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    h1{
+        font-family: $font-rock;
+        color: $pink;
+        font-size: 2em;
+        text-align: center;
+        margin-top: 50px;
+    }
+}
+
+.loader {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background: #fff;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+    margin-top: 30px;
+    &:after{
+        content: '';
+        position: absolute;
+        inset: 8px;
+        margin: auto;
+        background: #222b32;
+        border-radius: 50%;
+    }
+    &:before{
+        content: '';
+        position: absolute;
+        inset: 0px;
+        margin: auto;
+        background: $pink;
+        animation: crlMugLoader 1.5s linear infinite alternate;
+    }
+}
+  @keyframes crlMugLoader {
+    0%  ,10% { transform: translateY(64px) }
+    90% , 100% { transform: translateY(0px) }
+  }
+      

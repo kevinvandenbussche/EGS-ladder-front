@@ -79,3 +79,7 @@ li{
     width: 100%;
     height: auto;
 }
+
+.cross{
+    @include cross;
+}
