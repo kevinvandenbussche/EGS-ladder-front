@@ -8,7 +8,7 @@ export function DetailPlayer(props){
     const [gamesByUser, setGamesByUser] = useState([]);
     const idUser = props.idUser;
     const [load, setLoad] = useState(false);
-    
+
     useEffect(() =>{
         const url = entrypoint + 'api/games-by-player/'+idUser;
         fetch( url ,   { headers: {
@@ -20,7 +20,6 @@ export function DetailPlayer(props){
             (result)=>{
                 setGamesByUser(result);
                 setLoad(true);
-                console.log(result);
             }
         )
     },[]); 

@@ -11,10 +11,16 @@ export function CardUser(){
     const [toggleModal, setToggleModal] = useState(false);
     const [userDatas, setUserDatas] = useState([]);
     const [load, setLoad] = useState(false);
+    const [searchTerm, setSearchTerm] = useState([]);
+    console.log(searchTerm);
 
-    
     useEffect(() =>{
-        const url = entrypoint + 'api/data-user-for-main-page';
+        let url = entrypoint;
+        if(searchTerm.length == 0){
+        url += 'api/data-user-for-main-page';
+        }else{
+        url += 'api/search-player/' + searchTerm;
+        }
         fetch( url ,   { headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -22,12 +28,14 @@ export function CardUser(){
         .then(res => res.json())
         .then(
             (result) =>{
+                setUsers([]);
                 setUsers(result);
                 setLoad(true);
             }  
         )
-    },[]);  
+    },[searchTerm]);  
 
+    console.log(users);
     const clickModal = () =>{
         setToggleModal(current => !current)
     }
@@ -36,9 +44,22 @@ export function CardUser(){
     if(toggleModal === true){
         modalCss += 'modal-open';
     }
+
+    const handleChange = event => {
+        setSearchTerm(event.target.value);
+    };
+
     return(
         <div>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
+            <form className='search-barre'>
+                <input
+                    type="text"
+                    placeholder="Nom ou Prenom..."
+                    value={searchTerm}
+                    onChange={handleChange}
+                />
+            </form>
             {load === true ? 
             <div className='flex wrap'>
                 {users.map((user)=>{ 
