@@ -1,12 +1,13 @@
-import { useEffect, useState} from 'react';
-import { MenuBurger } from '../menuBurger/MenuBurger.js';
+import { useEffect, useState, useCallback } from 'react';
 import './detailUser.scss';
 import pictureUser from '../../asset/logo/user.png';
+import { Load } from '../load/Load.js';
 
 export function DetailPlayer(props){
     const entrypoint = 'http://localhost:8000/';
     const [gamesByUser, setGamesByUser] = useState([]);
     const idUser = props.idUser;
+    const [load, setLoad] = useState(false);
     
     useEffect(() =>{
         const url = entrypoint + 'api/games-by-player/'+idUser;
@@ -18,35 +19,52 @@ export function DetailPlayer(props){
         .then(
             (result)=>{
                 setGamesByUser(result);
-
+                setLoad(true);
+                console.log(result);
             }
         )
     },[]); 
+
+    const { setToggleModal } = props;
+    const handleClick = useCallback(() => {
+        setToggleModal(false);
+      }, [setToggleModal]);
    
+    
     return(
         <div>
-            <MenuBurger toggleModal = {props.toggleModal} setToggleModal = {props.setToggleModal()}/>
-            <div className='picture-profil'>
-                <img  className='img-fluid' src={pictureUser} alt="profil"/>
-            </div>
-            <div className='flex space-arround identity'>
-                <p>{props.userName}</p>
-                <p>{props.userFirstname}</p>
-            </div>
-            <div className='flex space-arround identity-game'>
-                <ul>
-                    <li>liste des pseudo</li>
-                    <li>{props.userPseudonyme}</li>
+            {load === true ?
+            <>
+                <ul onClick={handleClick} className='cross'>
+                    <li></li>
+                    <li></li>
                 </ul>
-                <ul>
-                    <li>liste des jeux</li>
+                <div className='picture-profil'>
+                    <img  className='img-fluid' src={pictureUser} alt="profil"/>
+                </div>
+                <div className='flex space-arround identity'>
+                    <p>{props.userName}</p>
+                    <p>{props.userFirstname}</p>
+                </div>
+                <div className='flex wrap space-arround container-identity-game'>
                     {gamesByUser.map((game)=>{
                         return(
-                            <li key={game.idGame}>{game.nameGame}</li>
+                        <ul key={game.idGame} className='identity-game'>
+                            <li>{game.nameGame}</li> 
+                            <li>{game.pseudo}</li>
+                            <li>Max: {game.maxElo}</li>
+                            <li>Min: {game.minElo}</li>                   
+                        </ul>
                         )
                     })}
-                </ul>
-            </div>
+                </div>
+            </>
+           :
+            <>
+                <Load/>
+            </>
+        }
         </div>
+    
     )
 }

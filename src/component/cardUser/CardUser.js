@@ -3,13 +3,15 @@ import { useEffect, useState} from 'react';
 import { ReactComponent as Edit } from '../../asset/logo/edit.svg';
 import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
 import { DetailPlayer } from '../detailUser/DetailPlayer.js';
-
+import { Load } from '../load/Load.js';
 
 export function CardUser(){
     const entrypoint = 'http://localhost:8000/';
     const [users, setUsers] = useState([]);
     const [toggleModal, setToggleModal] = useState(false);
-    const [userDatas, setUserDatas] = useState([])
+    const [userDatas, setUserDatas] = useState([]);
+    const [load, setLoad] = useState(false);
+
     
     useEffect(() =>{
         const url = entrypoint + 'api/data-user-for-main-page';
@@ -21,6 +23,7 @@ export function CardUser(){
         .then(
             (result) =>{
                 setUsers(result);
+                setLoad(true);
             }  
         )
     },[]);  
@@ -33,18 +36,10 @@ export function CardUser(){
     if(toggleModal === true){
         modalCss += 'modal-open';
     }
-
-    let arrayDataUser = [];
-    useEffect(()=>{
-        function ArrayDataUserPush(name, firstname, pseudonyme, id){
-            arrayDataUser.push(name, firstname, pseudonyme, id);
-
-        }
-    },[toggleModal]);
-    console.log(userDatas)
     return(
         <div>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
+            {load === true ? 
             <div className='flex wrap'>
                 {users.map((user)=>{ 
                         return(
@@ -56,7 +51,6 @@ export function CardUser(){
                             <div>
                                 <p>prenom: <span>&nbsp;{user.firstname}</span></p>
                                 <p>nom: <span>&nbsp;{user.name}</span></p>
-                                <p>pseudo: <span>&nbsp;{user.pseudonyme}</span></p>
                             </div>
                             <div className='flex space-arround management-profil'>
                                 <a><Edit/></a>
@@ -72,13 +66,11 @@ export function CardUser(){
                         userFirstname = {userDatas[1]} 
                         userPseudonyme = {userDatas[2]}
                         idUser = {userDatas[3]}
-                        toggleModal = {toggleModal}
-                        setToggleModal = {setToggleModal()}
+                        setToggleModal = {setToggleModal}
                     />
-                    </div>:
-                    <></>
+                    </div>: <></>
                 }
-            </div>
+            </div> : <Load/>}
         </div>
     )
 }

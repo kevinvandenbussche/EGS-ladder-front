@@ -30,11 +30,33 @@
 .identity{
     width: 50%;
     margin: 0 auto;
-    margin-top: 50px;
+    p{
+        font-family: $font-rock;
+        color: $pink;
+        font-size: 2rem;
+    }
+}
+
+.container-identity-game{
+    width: 90%;
+    margin: 0 auto;
 }
 
 .identity-game{
     margin-top: 50px;
+    width: 30%;
+    li{
+        font-family: $font-axis;
+        text-align: center;
+    }
+    li:nth-child(n+2){
+        margin-left: 10px;
+    }
+    li:nth-child(1){
+        color: $pink;
+    }
+    
 }
+
 
 
