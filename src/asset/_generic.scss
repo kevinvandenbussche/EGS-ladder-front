@@ -1,4 +1,4 @@
-@import 'variable.scss';
+@import '_variable.scss';
 
 *{
     color: $white;
@@ -79,6 +79,12 @@ p{
     font-family: $font-axis;
 }
 
+h1{
+    font-family: $font-rock;
+    font-size: 3rem;
+    color:$pink;
+}
+    
 .img-fluid{
     width: 100%;
     height: auto;

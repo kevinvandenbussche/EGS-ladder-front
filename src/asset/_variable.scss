@@ -39,3 +39,30 @@ $backgourndColorPrincipal: rgb(10,13,29);
     }
     
 }
+
+@mixin input($width, $height, $padding){
+    width: $width;
+        height: $height;
+        border: solid 2px $white;
+        background-color: rgba(10,13,29, 0.7);
+        color: $white;
+        font-family: $font-roboto;
+        font-size: 1.5rem;
+        padding: $padding;
+        position: relative;
+        &:focus{
+            outline: none;
+            border: solid 2px $pink;
+            &::before{
+                content: '';
+                position: absolute;
+                bottom: 0px;
+                left: 0px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: blue;                
+            }
+        }
+      
+}
