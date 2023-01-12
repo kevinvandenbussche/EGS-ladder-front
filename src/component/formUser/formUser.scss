@@ -1,0 +1,36 @@
+@import '../../asset/_generic';
+
+.form-create-user{
+    width: 30%;
+    margin: 0 auto;
+    input{
+        @include input(100%, 50px, 0px);
+        &:focus{
+            border: solid 2px $pink;
+        }
+    }
+    input[type="submit"]{
+        @include input(50%, 60px, 0px);
+        display: block;
+        margin: 0 auto;
+        margin-top: 20px;
+        background-color: $pink;
+        color: $white;
+        font-family: $font-rock;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: ease 0.2s all;
+        &:hover{
+            background-color: $white;
+            color: $pink;
+            border: solid 2px $pink;
+        }
+    }
+    label{
+        display: block;
+        text-align: center;
+        font-family: $font-axis;
+        margin: 20px 0px 5px 0px;
+        font-size: 1.5rem;
+    }
+}
