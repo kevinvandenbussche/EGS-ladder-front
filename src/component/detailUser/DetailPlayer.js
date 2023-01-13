@@ -3,9 +3,10 @@ import './detailUser.scss';
 import pictureUser from '../../asset/logo/user.png';
 import { Load } from '../load/Load.js';
 import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
+import {ENTRYPOINT} from '../../config.js';
+
 
 export function DetailPlayer(props){
-    const entrypoint = 'http://localhost:8000/';
     const [gamesByUser, setGamesByUser] = useState([]);
     const idUser = props.idUser;
     const [load, setLoad] = useState(false);
@@ -13,7 +14,7 @@ export function DetailPlayer(props){
     const [confirmDelete, setConfirmDelete] = useState(false);
 
     useEffect(() =>{
-        const url = entrypoint + 'api/games-by-player/'+idUser;
+        const url = ENTRYPOINT + 'api/games-by-player/'+idUser;
         fetch( url ,   { headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -30,7 +31,7 @@ export function DetailPlayer(props){
     //suppression d'un utlisateur
     useEffect(() =>{
         if(confirmDelete){
-            let url = entrypoint;
+            let url = ENTRYPOINT;
             url += 'api/users/' + idUser;
             fetch( url ,   {
                 method: 'DELETE',

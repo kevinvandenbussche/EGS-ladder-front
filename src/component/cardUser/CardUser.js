@@ -1,13 +1,13 @@
 import './CardUser.scss';
-import { useEffect, useState, useCallback} from 'react';
+import { useEffect, useState} from 'react';
 import { ReactComponent as Edit } from '../../asset/logo/edit.svg';
 import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
 import { DetailPlayer } from '../detailUser/DetailPlayer.js';
 import { Load } from '../load/Load.js';
+import {ENTRYPOINT} from '../../config.js';
 
 //http://localhost:8000/api/users
 export function CardUser(){
-    const entrypoint = 'http://localhost:8000/';
     const [users, setUsers] = useState([]);
     const [toggleModal, setToggleModal] = useState(false);
     const [userDatas, setUserDatas] = useState([]);
@@ -17,7 +17,7 @@ export function CardUser(){
     const [userId, setIdUser] = useState(0);
     
     useEffect(() =>{
-        let url = entrypoint;
+        let url = ENTRYPOINT;
         //je verifie si des données sont presentes dans l'input de recherche pour lancer la requete
         if(searchTerm === ''){
             url += 'api/data-user-for-main-page';
