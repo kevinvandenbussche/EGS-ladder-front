@@ -3,25 +3,18 @@
 .form-create-user{
     width: 30%;
     margin: 0 auto;
-    input{
-        position: relative;
-        @include input(100%, 50px, 0px);
-        &:focus{
-            border: solid 2px $pink;
-        }
-        &::after{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50px;
-            height: 50px;
-            border: solid 2px blue;
-            z-index: 22;
-            transition: ease 0.2s all;
-            background-color: blue
-        }
+    .container-input:focus-within::after{
+        @include effectInput;
     }
+    .container-input{
+        input{
+            @include input(100%, 50px, 0px);
+            &:focus{
+                border: solid 2px $pink;
+            }   
+        }
+}
+
     input[type="submit"]{
         @include input(50%, 60px, 0px);
         display: block;
@@ -55,3 +48,6 @@
         font-family: 'Roboto', sans-serif;
     }
 }
+
+
+

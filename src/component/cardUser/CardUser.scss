@@ -40,6 +40,9 @@
 .search-barre{
     width: 50%;
     margin: 0 auto;
+    .container-input:focus-within::after{
+        @include effectInput;
+    }
     input{
         @include input(100%, 50px, 10px);
     }

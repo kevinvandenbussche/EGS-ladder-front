@@ -1,4 +1,4 @@
-import './CardUser.scss';
+import './cardUser.scss';
 import { useEffect, useState} from 'react';
 import { ReactComponent as Edit } from '../../asset/logo/edit.svg';
 import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
@@ -59,12 +59,15 @@ export function CardUser(){
         <div>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
             <form className='search-barre'>
-                <input
-                    type="text"
-                    placeholder="Nom ou Prenom..."
-                    value={searchTerm}
-                    onChange={handleChange}
-                />
+            <div className='container-input'>
+                    <input
+                        type="text"
+                        placeholder="Nom ou Prenom..."
+                        value={searchTerm}
+                        onChange={handleChange}
+                        pattern="/^(?!.*script\s)/"
+                    />
+            </div>
             </form>
             {load === true ? 
             <div className='flex wrap'>

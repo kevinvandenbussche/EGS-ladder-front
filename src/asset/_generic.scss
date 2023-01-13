@@ -93,3 +93,7 @@ h1{
 .cross{
     @include cross;
 }
+
+.container-input{
+    position: relative; 
+}

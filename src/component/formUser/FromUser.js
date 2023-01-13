@@ -59,7 +59,7 @@ export function FormUser() {
             setFormSubmitted(false);
         } 
     }, [formData]);
-    
+
         return (
             <>
             {load === true ?     
@@ -69,32 +69,40 @@ export function FormUser() {
                 :
                 error === false ?
                     <>
-                        <h1 className='text-align-center'>inscrit toi</h1>
+                        <h1 className='text-align-center'>inscris toi</h1>
                         <div className='flex justify-content-center'>
                             <form  className = 'form-create-user'onSubmit={handleSubmit(onSubmit)}>
                                 <div>
                                     <label htmlFor="name">Saisi ton nom </label>
-                                    <input type="text" name="name" id="name" {...register("name", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    <div className='container-input'>
+                                        <input type="text" name="name" id="name" {...register("name", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    </div>
                                     {errors.name && <p>*le nom doit contenir au moins 2 caractères</p>}
                                 </div>
                                 <div>
                                     <label htmlFor="firstname">Saisi ton prenom </label>
-                                    <input type="text" name="firstname" id="firstname" {...register("firstname", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    <div className='container-input'>
+                                        <input type="text" name="firstname" id="firstname" {...register("firstname", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    </div>
                                     {errors.firstname && <p>*le prenom doit contenir au moins 2 caractères</p>}
                                 </div>
                                 <div>
                                     <label htmlFor ="email">Saisi ton mail </label>
-                                    <input type="email" name="email" id="email" {...register("email",{required:true, minLength:2, pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/})}/>
+                                    <div className='container-input'>
+                                        <input type="email" name="email" id="email" {...register("email",{required:true, minLength:2, pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/})}/>
+                                    </div>
                                     {errors.email && <p>*le mail n'est pas correct</p>}
                                 </div>
                                 <div>
                                     <label htmlFor ="password">Saisi ton mot de passe </label>
-                                    <input type="password" name="password" id="password" {...register("password", {required:true, 
-                                                                                                                    minLength:6, 
-                                                                                                                    max:24, 
-                                                                                                                    pattern: /^(?!.*script\s)/
-                                                                                                                })}/>
-                                    {errors.password && <p>*le mot de passe doit contenir au moins 8 caractères et 24 caractères maximnum</p>}
+                                    <div className='container-input'>
+                                        <input type="password" name="password" id="password" {...register("password", {required:true, 
+                                                                                                                        minLength:6, 
+                                                                                                                        max:24, 
+                                                                                                                        pattern: /^(?!.*script\s)/
+                                                                                                                    })}/>
+                                    </div>
+                                    {errors.password && <p>*le mot de passe doit contenir au moins 6 caractères et 24 caractères maximnum</p>}
                                 </div>
                                 <div>
                                     <input  type="submit" value="GO!"/>

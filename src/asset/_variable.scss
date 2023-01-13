@@ -49,20 +49,9 @@ $backgourndColorPrincipal: rgb(10,13,29);
         font-family: $font-roboto;
         font-size: 1.5rem;
         padding: $padding;
-        position: relative;
         &:focus{
             outline: none;
             border: solid 2px $pink;
-            &::before{
-                content: '';
-                position: absolute;
-                bottom: 0px;
-                left: 0px;
-                width: 50px;
-                height: 50px;
-                border-radius: 50%;
-                background-color: blue;                
-            }
         }
       
 }
@@ -79,3 +68,32 @@ $backgourndColorPrincipal: rgb(10,13,29);
     border: 1px solid $white;
     box-shadow: 3px 0px 30px $pink;
 }
+
+@mixin effectInput{
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        z-index: 22;
+        border: solid 1px $pink;
+        transition: ease 0.2s all;
+        background-color: rgb(255, 27, 172);
+        transform: translate(-50%, -50%);
+        animation: slide-right-to-left 5s linear infinite;
+        box-shadow: 0 0 10px #ff00c8, 0 0 20px #ff00c8, 0 0 30px #ff00c8, 0 0 40px #ff00c8, 0 0 50px #ff00c8, 0 0 60px #ff00c8, 0 0 70px #ff00c8;
+}
+
+@keyframes slide-right-to-left {
+    0% {
+        left: 0px;
+    }
+    50% {
+        left: 100%;
+    }
+    100% {
+        left: 0px;
+    }
+  }
