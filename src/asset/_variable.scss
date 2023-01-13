@@ -66,3 +66,16 @@ $backgourndColorPrincipal: rgb(10,13,29);
         }
       
 }
+
+@mixin backgroundCard{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70vh;
+    overflow: hidden;
+    background-color: $backgourndColorPrincipal;
+    border: 1px solid $white;
+    box-shadow: 3px 0px 30px $pink;
+}

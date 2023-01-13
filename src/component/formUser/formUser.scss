@@ -4,9 +4,22 @@
     width: 30%;
     margin: 0 auto;
     input{
+        position: relative;
         @include input(100%, 50px, 0px);
         &:focus{
             border: solid 2px $pink;
+        }
+        &::after{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50px;
+            height: 50px;
+            border: solid 2px blue;
+            z-index: 22;
+            transition: ease 0.2s all;
+            background-color: blue
         }
     }
     input[type="submit"]{
@@ -32,5 +45,13 @@
         font-family: $font-axis;
         margin: 20px 0px 5px 0px;
         font-size: 1.5rem;
+    }
+    p{
+        font-family: $font-axis;
+        color: red;
+        font-size: 1rem;
+        text-align: center;
+        background-color: rgba(10,13,29, 0.7);
+        font-family: 'Roboto', sans-serif;
     }
 }

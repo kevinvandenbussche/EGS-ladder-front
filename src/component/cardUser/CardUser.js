@@ -99,7 +99,10 @@ export function CardUser(){
                     />
                     </div>: <></>
                 }
-            </div> : <Load/>}
+            </div> 
+            : 
+            <Load/>
+            }
         </div>
     )
 }

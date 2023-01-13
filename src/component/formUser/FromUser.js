@@ -1,12 +1,23 @@
 import React, { useEffect, useState} from 'react';
 import{useForm} from 'react-hook-form';
 import './formUser.scss'
+import { ENTRYPOINT } from '../../config';
+import { Error } from '../error/Error.js';
+import { Load } from '../load/Load.js';
 
 export function FormUser() {
+    //hook pour les input de fomrulaire
     const {handleSubmit, register, formState :  {errors} } = useForm();
-    const entrypoint = 'http://localhost:8000/';
+    const entrypoint = ENTRYPOINT;
+    //talbeau pour l'envoie des données
     const [formData, setFormData] = useState({});
-  
+    //verification que le formulaire est bien envoyé
+    const [formSubmitted, setFormSubmitted] = useState(false); 
+    //gestion du composant error
+    const [error, setError] = useState(false);
+    const [load, setLoad] = useState(false);
+
+
     const onSubmit = (data)=>{
         setFormData({
             email: data.email,
@@ -17,11 +28,13 @@ export function FormUser() {
             name: data.name,
             firstname: data.firstname,
         })
+        setFormSubmitted(true);
     };
-        useEffect(() =>{
+    useEffect(() =>{
+        if(formSubmitted){
+            setLoad(true);
             let url = entrypoint;
             url += 'api/users';
-            console.log(formData);
             fetch( url ,   {
                 method: 'POST',
                 headers: {
@@ -30,42 +43,70 @@ export function FormUser() {
                 },
                 body: JSON.stringify(formData)
             })
-            .then((response) => response.json())
+            .then((response) => 
+                response.json()
+            )
             .then((data) => {
-                console.log(data);
+                if(data.title){
+                    setError(true);
+                }
+                setLoad(false);
             })
             .catch((error) => {
-                console.error(error);
-            });
-        }, [formData]);
-        
+                setError(true);
 
-    return (
-        <>
-        <h1 className='text-align-center'>inscrit toi</h1>
-        <div className='flex justify-content-center'>
-            <form  className = 'form-create-user'onSubmit={handleSubmit(onSubmit)}>
-                <div>
-                    <label htmlFor="name">Enter your name: </label>
-                    <input type="text" name="name" id="name" {...register("name")}/>
+            });
+            setFormSubmitted(false);
+        } 
+    }, [formData]);
+        return (
+            <>
+            {load === true ?     
+                <>
+                    <Load/>
+                </>
+                :
+                error === false ?
+                    <>
+                        <h1 className='text-align-center'>inscrit toi</h1>
+                        <div className='flex justify-content-center'>
+                            <form  className = 'form-create-user'onSubmit={handleSubmit(onSubmit)}>
+                                <div>
+                                    <label htmlFor="name">Saisi ton nom </label>
+                                    <input type="text" name="name" id="name" {...register("name", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    {errors.name && <p>*le nom doit contenir au moins 2 caractères</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor="firstname">Saisi ton prenom </label>
+                                    <input type="text" name="firstname" id="firstname" {...register("firstname", {required:true, minLength:2, pattern: /^(?!.*script\s)/})}/>
+                                    {errors.firstname && <p>*le prenom doit contenir au moins 2 caractères</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor ="email">Saisi ton mail </label>
+                                    <input type="email" name="email" id="email" {...register("email",{required:true, minLength:2, pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/})}/>
+                                    {errors.email && <p>*le mail n'est pas correct</p>}
+                                </div>
+                                <div>
+                                    <label htmlFor ="password">Saisi ton mot de passe </label>
+                                    <input type="password" name="password" id="password" {...register("password", {required:true, 
+                                                                                                                    minLength:6, 
+                                                                                                                    max:24, 
+                                                                                                                    pattern: /^(?!.*script\s)/
+                                                                                                                })}/>
+                                    {errors.password && <p>*le mot de passe doit contenir au moins 8 caractères et 24 caractères maximnum</p>}
+                                </div>
+                                <div>
+                                    <input  type="submit" value="GO!"/>
+                                </div>
+                    </form>
                 </div>
-                <div>
-                    <label htmlFor="firstname">Enter your prenom: </label>
-                    <input type="text" name="firstname" id="firstname" {...register("firstname")}/>
-                </div>
-                <div>
-                    <label htmlFor ="email">Enter your email: </label>
-                    <input type="email" name="email" id="email" {...register("email")}/>
-                </div>
-                <div>
-                    <label htmlFor ="password">Enter your password: </label>
-                    <input type="password" name="password" id="password" {...register("password")}/>
-                </div>
-                <div>
-                    <input type="submit" value="Subscribe!"/>
-                </div>
-            </form>
-        </div>
-        </>
-    );
+            </>
+            :
+            <>
+                <Error setError={setError}/>
+            </>
+       
+    }
+    </>
+);
 }

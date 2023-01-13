@@ -1,0 +1,8 @@
+@import '../../asset/_generic';
+
+.error{
+    @include backgroundCard;
+    div{
+        width: 100%;
+    }
+}
