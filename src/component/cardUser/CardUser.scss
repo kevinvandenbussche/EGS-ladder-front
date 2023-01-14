@@ -10,10 +10,13 @@
     p{
         font-family: $font-roboto, cursive;
         padding: 10px;
-        
+        text-transform: capitalize;
         span{
             font-family: $font-rock;
         }
+    }
+    p:nth-first-child(){
+        text-decoration: underline;
     }
     .management-profil{
         div{

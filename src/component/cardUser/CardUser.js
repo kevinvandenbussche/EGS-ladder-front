@@ -5,6 +5,7 @@ import { ReactComponent as Delete } from '../../asset/logo/delete.svg';
 import { DetailPlayer } from '../detailUser/DetailPlayer.js';
 import { Load } from '../load/Load.js';
 import {ENTRYPOINT} from '../../config.js';
+import { EditUserForm } from '../editUserForm/EditUserForm.js';
 
 //http://localhost:8000/api/users
 export function CardUser(){
@@ -15,6 +16,7 @@ export function CardUser(){
     const [searchTerm, setSearchTerm] = useState('');
     const [clickDelete, setClickDelete] = useState(false);
     const [userId, setIdUser] = useState(0);
+    const [toggleEdit, setToggleEdit] = useState(false);
     
     useEffect(() =>{
         let url = ENTRYPOINT;
@@ -36,8 +38,7 @@ export function CardUser(){
                 setLoad(true);
             }  
         )
-    },[searchTerm]);  
-
+    },[searchTerm, clickDelete]);  
     //changement de l'etat lors du click sur la croix
     const clickModal = () =>{
         setToggleModal(current => !current)
@@ -54,7 +55,6 @@ export function CardUser(){
         setSearchTerm(event.target.value);
     };
 
-    
     return(
         <div>
             <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
@@ -83,7 +83,7 @@ export function CardUser(){
                                 <p>nom: <span>&nbsp;{user.name}</span></p>
                             </div>
                             <div className='flex space-arround management-profil'>
-                                <div><Edit/></div>
+                                <div onClick={()=>{setToggleEdit(true); setIdUser(user.id)}}><Edit/></div>
                                 <div onClick={()=>{setClickDelete(true); setIdUser(user.id)}}><Delete/></div>
                             </div>                      
                         </div>);  
@@ -91,16 +91,21 @@ export function CardUser(){
                 }
                 {toggleModal === true ?
                     <div className={modalCss}>
-                        <DetailPlayer
-                        userName = {userDatas[0]}
-                        userFirstname = {userDatas[1]} 
-                        userPseudonyme = {userDatas[2]}
-                        idUser = {userDatas[3]}
-                        setToggleModal = {setToggleModal}
-                        clickDeleteCard = {clickDelete}
-                        setClickDelete = {setClickDelete}
-                    />
-                    </div>: <></>
+                    <DetailPlayer
+                            userName={userDatas[0]}
+                            userFirstname={userDatas[1]} 
+                            userPseudonyme={userDatas[2]}
+                            idUser={userDatas[3]}
+                            setToggleModal={setToggleModal}
+                            clickDeleteCard={clickDelete}
+                            setClickDelete={setClickDelete}
+                            toggleEdit={toggleEdit}
+                            setToggleEdit={setToggleEdit}
+                        >
+                    {toggleEdit === true && <EditUserForm idUser={userDatas[3]} />}
+                    </DetailPlayer>
+                    </div>
+                    : <></>
                 }
             </div> 
             : 

@@ -10,9 +10,9 @@ function App() {
     <div className="App">
       <Logo3d />
       <div className='position-relative-for-other-element'>
-        {/* <CardUser/> */}
+        <CardUser/>
         {/* <Graph/> */}
-        <FormUser/>
+        {/* <FormUser/> */}
       </div>
       
     </div>
