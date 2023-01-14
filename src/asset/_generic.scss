@@ -8,7 +8,8 @@
 }
 
 body{
-    background-color: $backgourndColorPrincipal;
+    background: rgb(135,22,99);
+    background: linear-gradient(90deg, rgba(135,22,99,1) 0%, rgba(40,5,33,1) 1%, rgba(0,0,0,1) 50%, rgba(40,5,33,1) 99%, rgba(135,22,99,1) 100%);
     position: relative;
     z-index: -1;
 }
