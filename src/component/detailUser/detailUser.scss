@@ -1,4 +1,4 @@
-@import '../../asset/_generic';
+
 
 .container-detail-user{
     @include backgroundCard;
@@ -21,7 +21,7 @@
     width: 50%;
     margin: 0 auto;
     p{
-        font-family: $font-rock;
+        font-family: $font-axis;
         color: $pink;
         font-size: 2rem;
     }
