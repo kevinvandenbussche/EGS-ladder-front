@@ -57,17 +57,17 @@ export function CardUser(){
 
     return(
         <div>
-            <h1 className='title-player text-align-center'>suivi de tous les joueurs</h1>
+            <h1 className='title-player text-align-center'>suivi des joueurs</h1>
             <form className='search-barre'>
-            <div className='container-input'>
-                    <input
-                        type="text"
-                        placeholder="Nom ou Prenom..."
-                        value={searchTerm}
-                        onChange={handleChange}
-                        pattern="/^(?!.*script\s)/"
-                    />
-            </div>
+                <div className='container-input'>
+                        <input
+                            type="text"
+                            placeholder="Nom ou Prenom..."
+                            value={searchTerm}
+                            onChange={handleChange}
+                            pattern="/^(?!.*script\s)/"
+                        />
+                </div>
             </form>
             {load === true ? 
             <div className='flex wrap'>
