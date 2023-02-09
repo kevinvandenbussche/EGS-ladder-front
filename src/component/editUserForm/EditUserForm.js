@@ -1,9 +1,10 @@
 import React, { useEffect, useState} from 'react';
 import{useForm} from 'react-hook-form';
-import '../formUser/formUser.scss'
 import { ENTRYPOINT } from '../../config';
 import { Error } from '../error/Error.js';
 import { Load } from '../load/Load.js';
+import './editUserForm.scss'
+
 
 export function EditUserForm(props) {
     console.log('je suis dans le form')
@@ -86,7 +87,7 @@ export function EditUserForm(props) {
                 :
                 error === false ?
                     <>
-                        <h1 className='text-align-center'>Modifier l'utilisateur</h1>
+                        <h2 className='text-align-center'>Modifier l'utilisateur</h2>
                         <div className='flex justify-content-center'>
                             <form  className = 'form-create-user'onSubmit={handleSubmit(onSubmit)}>
                                 <div>
@@ -129,7 +130,7 @@ export function EditUserForm(props) {
                                     </select>
                                 </div>
                                 <div>
-                                    <input  type="submit" value="GO!"/>
+                                    <input  type="submit" value="Valider"/>
                                 </div>
                                 
                     </form>
