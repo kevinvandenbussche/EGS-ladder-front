@@ -14,6 +14,7 @@ export function DetailPlayer(props){
     const clickDeleteCard = props.clickDeleteCard;
     const [confirmDelete, setConfirmDelete] = useState(false);
     const toggleEdit = props.toggleEdit;
+    const [error, setError] = useState(false);
 
     useEffect(() =>{
         const url = ENTRYPOINT + 'api/games-by-player/'+idUser;
@@ -45,9 +46,12 @@ export function DetailPlayer(props){
                 () =>{
                     setConfirmDelete(false);
                     handleClick();
-                    
                 }  
-            )}
+            )
+            .catch((error) => {
+                setError(true);
+            });
+        }
     },[confirmDelete]);
 
     const { setClickDelete } = props;
