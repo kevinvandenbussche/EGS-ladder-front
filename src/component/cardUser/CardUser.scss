@@ -6,17 +6,15 @@
     margin-left: 20px;
     margin-top: 20px;
     transition: ease 0.2s all;
+    background-color: rgb(10,13,29, 0.9);
     cursor: pointer;
     p{
         font-family: $font-roboto, cursive;
         padding: 10px;
         text-transform: capitalize;
         span{
-            font-family: $font-rock;
+            font-size: 1.2rem;
         }
-    }
-    p:nth-first-child(){
-        text-decoration: underline;
     }
     .management-profil{
         div{
@@ -33,21 +31,24 @@
     }
 
     &:hover{
-        box-shadow: 0px 0px 30px $pink;
-        transform: scale(1.02);
         background-color: $backgourndColorPrincipal;
-        
+        box-shadow:
+        inset 0 0 20px rgba(245, 245, 245, 0.427),
+        0 0 20px #fff,
+        -2px 0 10px #fff,
+        2px 0 10px #fff;
+        transform: scale(1.02);
     }
 }
 
 .search-barre{
     width: 50%;
-    margin: 0 auto;
+    margin: 20px auto;
     .container-input:focus-within::after{
         @include effectInput;
     }
     input{
-        @include input(100%, 50px, 10px);
+        @include input(100%, 50px, 10px);     
     }
 }
 
