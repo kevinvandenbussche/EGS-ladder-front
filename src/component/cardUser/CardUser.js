@@ -20,15 +20,17 @@ export function CardUser(){
     
     useEffect(() =>{
         let url = ENTRYPOINT;
-        //je verifie si des données sont presentes dans l'input de recherche pour lancer la requete
+        //je verifie si des données sont presentes dans l'input de recherche pour lancer la requette
         if(searchTerm === ''){
             url += 'api/data-user-for-main-page';
         }else{
             url += 'api/search-player/' + searchTerm;
         }
         fetch( url ,   { headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            
             }})
         .then(res => res.json())
         .then(
