@@ -1,5 +1,4 @@
-@import '_variable.scss';
-
+@import "variable";
 *{
     color: $white;
     margin: 0;
@@ -143,12 +142,14 @@ select{
   color: $white;
   margin-right: -0.8em;
   text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em $white;
-  animation: text-flicker 3s linear infinite;
+  animation: text-flicker 3s linear;
 }
 
 .faulty-letter {
-  opacity: 0.5;
-  animation: faulty-flicker 2s linear infinite;
+  animation: faulty-flicker 2s linear ;
+  margin-left: 1.8rem;
+  text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em $white;
+
   color: $white;
 }
 
