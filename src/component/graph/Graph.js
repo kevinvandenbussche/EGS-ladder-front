@@ -10,14 +10,18 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
+  import { useLocation } from 'react-router-dom';
 
 export function Graph(){
-    const idUser = 1;
+    const location = useLocation();
+    const param = location.pathname.split('/')[2];
+    const idUser = param;
     const entrypoint = 'http://localhost:8000/';
     const [datas, setdatas] = useState([]);
     useEffect(() =>{
         const url = entrypoint + 'api/find-elo-by-user/' + idUser;
         fetch( url ,   { headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             }})
