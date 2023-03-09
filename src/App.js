@@ -3,7 +3,7 @@ import { CardUser } from './component/cardUser/CardUser.js';
 import { Graph } from './component/graph/Graph.js';
 import { FormUser } from './component/formUser/FromUser.js';
 import { EditUserForm } from './component/editUserForm/EditUserForm.js';
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SelectGame } from './component/selectGame/SelectGame.js';
 import { Login } from './component/login/Login.js';
 
@@ -19,16 +19,12 @@ function App() {
         <Routes>
           <Route path="/inscription" element={<FormUser />} />
           <Route path="/graph/:id" element={<Graph />} />
-          <Route path="/users" element={< CardUser/>} />
+          <Route path="/user-management" element={< CardUser/>} />
           <Route path="/select-game/:id" element={<SelectGame/>} />
           <Route path="/" element={<Login />} />
-          <Route path="/form-user" element={<FormUser/>} />
+          <Route path="/create-account" element={<FormUser/>} />
         </Routes>
       </Router>
-          {/* <EditUserForm/> */}
-        {/* <CardUser/> */}
-        {/* <Graph/> */}
-        {/* <FormUser/> */}
       </div>
       
     </div>
