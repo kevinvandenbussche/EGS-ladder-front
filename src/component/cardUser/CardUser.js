@@ -6,6 +6,8 @@ import { DetailPlayer } from '../detailUser/DetailPlayer.js';
 import { Load } from '../load/Load.js';
 import {ENTRYPOINT} from '../../config.js';
 import { EditUserForm } from '../editUserForm/EditUserForm.js';
+import { useNavigate } from 'react-router-dom';
+
 
 //http://localhost:8000/api/users
 export function CardUser(){
@@ -17,6 +19,7 @@ export function CardUser(){
     const [clickDelete, setClickDelete] = useState(false);
     const [userId, setIdUser] = useState(0);
     const [toggleEdit, setToggleEdit] = useState(false);
+    const navigate = useNavigate();
     
     useEffect(() =>{
         let url = ENTRYPOINT;
@@ -35,9 +38,13 @@ export function CardUser(){
         .then(res => res.json())
         .then(
             (result) =>{
-                setUsers([]);
-                setUsers(result);
-                setLoad(true);
+                console.log(result)
+                if(result.code === 401 || result.code === 403){
+                    navigate('/');
+                }else{
+                    setUsers(result);
+                    setLoad(true);
+                }
             }  
         )
     },[searchTerm, clickDelete]);  

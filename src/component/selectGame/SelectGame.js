@@ -3,7 +3,7 @@ import { ENTRYPOINT } from '../../config';
 import { useForm } from 'react-hook-form';
 import "../selectGame/selectGame.scss";
 import { Link } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 
 
@@ -19,6 +19,7 @@ export function SelectGame() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [userId] = useState(paramUserId);
   const [popIn, setPopIn] = useState(true);
+  const navigate = useNavigate();
   
 
 
@@ -28,12 +29,16 @@ export function SelectGame() {
     url += 'api/data-game'
     fetch(url, {
       headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       }
     })
       .then((response) => response.json())
       .then((data) => {
+        if(data.code === 401 || data.code === 403){
+          navigate('/')
+        }
         setData(data);
       })
   }, []);
@@ -41,15 +46,31 @@ export function SelectGame() {
   const onSubmit = (data) => {
     const event = new Event('submit');
     event.preventDefault();
-    // console.log(data.pseudo);
     setFormData({
         pseudonyme: data.pseudo,
-        game: idGame,
+        game: "api/games/" + idGame,
         dateStart: new Date(),
-        user: userId
+        user: "api/users/" + userId,
+        dateRegisterElo : new Date(),
     })
+    console.log(JSON.stringify(formData))
     setFormSubmitted(true);
-    // console.log(formData);
+    fetch(ENTRYPOINT + 'api/to_plays', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then((response) => response.json())
+    .then((response) => {
+      console.log('response',response);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   }
   
   //j'affiche le formulaire
@@ -58,7 +79,7 @@ export function SelectGame() {
     setSelectedGame(game.name);
     setIdGame(game.id);
   };
-
+  //fermer la popin de l'explication du fonctionnement de la page
   const close = () => {
     setPopIn(false);
   }
@@ -73,8 +94,7 @@ export function SelectGame() {
           <li></li>
           <li></li>
         </ul>
-        
-        <p className="text-align-center">Pour commencer, selectionne tes jeux préférés
+        <p className="text-align-center">Pour commencer, selectionnes tes jeux préférés. Rentre ton pseudo pour chaque jeu et valide. Une fois que tu as validé pour tous tes jeux, tu peux cliquer sur suivant pour voir tes stats.
         Tu pourras ensuite voir tes stats en cliquant sur suivant</p>
       </div>
       : null}
