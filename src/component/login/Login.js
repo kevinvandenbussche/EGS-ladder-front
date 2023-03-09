@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { ENTRYPOINT } from '../../config.js';
 import{useForm} from 'react-hook-form';
 import jwt_decode from 'jwt-decode';
@@ -8,27 +8,21 @@ import {FormUser} from '../formUser/FromUser.js';
 import '../login/login.scss';
 import { linkStyle } from '../../asset/linkstyle.js';
 import { Error } from '../error/Error.js';
-import { SelectGame } from '../selectGame/SelectGame.js';
 
 
-export function Login(props){
+export function Login(){
     const [error, setError] = useState(false);
     const [load, setLoad] = useState(false);
     const {handleSubmit, register, formState :  {errors} } = useForm();
     const entrypoint = ENTRYPOINT;
     const navigate = useNavigate();
-    const [userIdCreateUser, setUserIdCreateUser] = useState(0);
-    if(props.userId){
-        setUserIdCreateUser(props.userId);
-    }
+    const location = useLocation();
 
     const onSubmit = (data)=>{
         const event = new Event('submit');
-        console.log('form', data.email)
         event.preventDefault();
         setLoad(true);
         let url = entrypoint + 'login';
-        console.log(url)
         fetch( url ,   {
             method: 'POST',
             headers: {
@@ -51,12 +45,16 @@ export function Login(props){
                 localStorage.setItem('token', response.token);
                 const userId = decoded.id;
                 if(decoded.roles[0] === 'ROLE_ADMIN'){
-                    navigate('/users');
+                    navigate('/user-management');
                 }
-                else if (userId){
-                    navigate('/selectGames/' + userId);
-                }
-                navigate('/graph/' + userId);
+                else if(location.state !== null){
+                    if(userId && location.state.previousUrl === '/create-account'){
+                        navigate('/select-game/' + userId);
+                    }
+                } 
+                else{
+                    navigate('/graph/' + userId);
+                }  
             }
             setLoad(false);
         })
@@ -72,7 +70,7 @@ export function Login(props){
             <>
                 <h1 className='text-align-center'>Connecte toi</h1>
                 <div className='text-align-center'>
-                    <Link style={linkStyle} to="/form-user" element={<FormUser/>}>Pas Inscrit Créer un compte</Link>
+                    <Link style={linkStyle} to="/create-account" element={<FormUser/>}>Pas Inscrit Créer un compte</Link>
                 </div>
                 <form className = 'form-create-user' onSubmit={handleSubmit(onSubmit)}>
                     <div>
@@ -89,14 +87,13 @@ export function Login(props){
                         </div>
                         {errors.password && <p>*le mot de passe doit contenir au moins 6 caractères</p>}
                     </div>
-                    <button type="submit" className='glowing-btn'>
+                    <button data-testid="submit" type="submit" className='glowing-btn'>
                                             <span className='glowing-txt'>S</span><span className='faulty-letter'>A</span><span className='glowing-txt'>VE</span>
                     </button>
                 </form>
             </>:
         <Error setError={setError}/>
         }
-        {userIdCreateUser !== 0 && !error && <SelectGame userId={userIdCreateUser} />}
         </div>
     )
 }
