@@ -19,6 +19,7 @@ export function DetailPlayer(props){
     useEffect(() =>{
         const url = ENTRYPOINT + 'api/games-by-player/'+idUser;
         fetch( url ,   { headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json',
             'Content-Type': 'application/json'
             }})

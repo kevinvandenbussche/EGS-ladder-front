@@ -7,6 +7,7 @@ import { Load } from '../load/Load.js';
 import {ENTRYPOINT} from '../../config.js';
 import { EditUserForm } from '../editUserForm/EditUserForm.js';
 import { useNavigate } from 'react-router-dom';
+import { Header} from '../header/Header.js';
 
 
 //http://localhost:8000/api/users
@@ -20,11 +21,14 @@ export function CardUser(){
     const [userId, setIdUser] = useState(0);
     const [toggleEdit, setToggleEdit] = useState(false);
     const navigate = useNavigate();
+    const [userType, setUserType] = useState('');
     
     useEffect(() =>{
         let url = ENTRYPOINT;
         //je verifie si des données sont presentes dans l'input de recherche pour lancer la requette
-        if(searchTerm === ''){
+        if(userType === 'coach'){
+            url += 'api/coaches';
+        }else if(searchTerm === '' || userType === 'user'){
             url += 'api/data-user-for-main-page';
         }else{
             url += 'api/search-player/' + searchTerm;
@@ -47,7 +51,7 @@ export function CardUser(){
                 }
             }  
         )
-    },[searchTerm, clickDelete]);  
+    },[searchTerm, clickDelete, userType]);  
     //changement de l'etat lors du click sur la croix
     const clickModal = () =>{
         setToggleModal(current => !current)
@@ -64,7 +68,14 @@ export function CardUser(){
         setSearchTerm(event.target.value);
     };
 
+    //reuperation du mot de ma liste lors du click sur le bouton supprimer liste
+    const getTypeUser = (type) =>{
+        setUserType(type);
+    }
+    console.log(userType);
     return(
+        <>
+        <Header/>
         <div>
             <h1 className='title-player text-align-center'>suivi des joueurs</h1>
             <form className='search-barre'>
@@ -78,6 +89,10 @@ export function CardUser(){
                         />
                 </div>
             </form>
+            <ul className='flex list-type-user'>
+                <li onClick={()=>getTypeUser('user')}>utilisateurs</li>
+                <li onClick={()=>getTypeUser('coach')}>coach</li>
+            </ul>
             {load === true ? 
             <div className='flex wrap'>
                 {users.map((user)=>{ 
@@ -120,6 +135,8 @@ export function CardUser(){
             : 
             <Load/>
             }
+            
         </div>
+        </>
     )
 }
