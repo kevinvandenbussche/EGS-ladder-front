@@ -9,8 +9,6 @@ import { EditUserForm } from '../editUserForm/EditUserForm.js';
 import { useNavigate } from 'react-router-dom';
 import { Header} from '../header/Header.js';
 
-
-//http://localhost:8000/api/users
 export function CardUser(){
     const [users, setUsers] = useState([]);
     const [toggleModal, setToggleModal] = useState(false);
@@ -18,20 +16,23 @@ export function CardUser(){
     const [load, setLoad] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [clickDelete, setClickDelete] = useState(false);
-    const [userId, setIdUser] = useState(0);
     const [toggleEdit, setToggleEdit] = useState(false);
     const navigate = useNavigate();
-    const [userType, setUserType] = useState('');
+    const [userType, setUserType] = useState('user');
     
     useEffect(() =>{
         let url = ENTRYPOINT;
-        //je verifie si des données sont presentes dans l'input de recherche pour lancer la requette
-        if(userType === 'coach'){
-            url += 'api/coaches';
-        }else if(searchTerm === '' || userType === 'user'){
-            url += 'api/data-user-for-main-page';
+        //je verifie si des données sont presentes dans 
+        //l'input de recherche pour lancer la requette
+        //selon le type d'utilisateur recherché je change l'url de la requette
+        if(userType === 'coach' && searchTerm === ''){
+            url += 'api/find-coach';
+        }else if(searchTerm !== '' && userType === 'user'){
+            url += 'api/search-user/' + searchTerm;
+        }else if(searchTerm !== '' && userType === 'coach'){
+            url += 'api/search-coach/' + searchTerm;
         }else{
-            url += 'api/search-player/' + searchTerm;
+            url += 'api/data-user-for-main-page';
         }
         fetch( url ,   { headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -42,8 +43,9 @@ export function CardUser(){
         .then(res => res.json())
         .then(
             (result) =>{
-                console.log(result)
-                if(result.code === 401 || result.code === 403){
+                if(result.code === 401 || 
+                    result.code === 403 || 
+                    localStorage.getItem('role') === 'ROLE_USER'){
                     navigate('/');
                 }else{
                     setUsers(result);
@@ -51,7 +53,7 @@ export function CardUser(){
                 }
             }  
         )
-    },[searchTerm, clickDelete, userType]);  
+    },[searchTerm, clickDelete, userType, toggleEdit]);  
     //changement de l'etat lors du click sur la croix
     const clickModal = () =>{
         setToggleModal(current => !current)
@@ -72,7 +74,7 @@ export function CardUser(){
     const getTypeUser = (type) =>{
         setUserType(type);
     }
-    console.log(userType);
+
     return(
         <>
         <Header/>
@@ -90,8 +92,8 @@ export function CardUser(){
                 </div>
             </form>
             <ul className='flex list-type-user'>
-                <li onClick={()=>getTypeUser('user')}>utilisateurs</li>
-                <li onClick={()=>getTypeUser('coach')}>coach</li>
+                <li className={userType === 'user'?"active" : ""} onClick={()=>getTypeUser('user')}>utilisateurs</li>
+                <li className={userType === 'coach'?"active" : ""} onClick={()=>getTypeUser('coach')}>coach</li>
             </ul>
             {load === true ? 
             <div className='flex wrap'>
@@ -107,8 +109,8 @@ export function CardUser(){
                                 <p>nom: <span>&nbsp;{user.name}</span></p>
                             </div>
                             <div className='flex space-arround management-profil'>
-                                <div onClick={()=>{setToggleEdit(true); setIdUser(user.id)}}><Edit/></div>
-                                <div onClick={()=>{setClickDelete(true); setIdUser(user.id)}}><Delete/></div>
+                                <div onClick={()=>{setToggleEdit(true)}}><Edit/></div>
+                                <div onClick={()=>{setClickDelete(true)}}><Delete/></div>
                             </div>                      
                         </div>);  
                     })     
