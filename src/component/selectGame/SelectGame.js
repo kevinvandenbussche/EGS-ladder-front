@@ -16,14 +16,13 @@ export function SelectGame() {
   const [showInput, setShowInput] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');
   const [idGame, setIdGame] = useState(0);
-  const [formSubmitted, setFormSubmitted] = useState(false);
   const [userId] = useState(paramUserId);
   const [popIn, setPopIn] = useState(true);
   const navigate = useNavigate();
+  const [pseudSuccess, setPseudSuccess] = useState(false);
+  const [pseudError, setPseudError] = useState(false);
   
-
-
-  //je recuepre les jeux de la base de donnée
+  //je recupere les jeux de la base de donnée
   useEffect(() => {
     let url = ENTRYPOINT;  
     url += 'api/data-game'
@@ -41,20 +40,30 @@ export function SelectGame() {
         }
         setData(data);
       })
-  }, []);
+  }, [navigate]);
   //je recupere les données du formulaire
   const onSubmit = (data) => {
-    const event = new Event('submit');
-    event.preventDefault();
+    //convertir la date en format sql
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const day = ('0' + date.getDate()).slice(-2);
+    const hours = ('0' + date.getHours()).slice(-2);
+    const minutes = ('0' + date.getMinutes()).slice(-2);
+    const seconds = ('0' + date.getSeconds()).slice(-2);
+    const formattedDate = year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
     setFormData({
-        pseudonyme: data.pseudo,
-        game: "api/games/" + idGame,
-        dateStart: new Date(),
-        user: "api/users/" + userId,
-        dateRegisterElo : new Date(),
+      pseudonyme: data.pseudo,
+      game: "api/games/" + idGame,
+      dateStart: formattedDate,
+      user: "api/users/" + userId,
+      dateRegisterElo : formattedDate
     })
-    console.log(JSON.stringify(formData))
-    setFormSubmitted(true);
+    
+  }
+
+  useEffect(() => {
+    if(formData.pseudonyme){
     fetch(ENTRYPOINT + 'api/to_plays', {
       method: 'POST',
       headers: {
@@ -65,13 +74,14 @@ export function SelectGame() {
       body: JSON.stringify(formData)
     })
     .then((response) => response.json())
-    .then((response) => {
-      console.log('response',response);
+    .then(() => {
+      setPseudSuccess(true);
     })
-    .catch((error) => {
-      console.log(error);
+    .catch(() => {
+      setPseudError(true);
     })
   }
+  }, [formData]);
   
   //j'affiche le formulaire
   const handleClick = (game) => {
@@ -105,19 +115,22 @@ export function SelectGame() {
           ))}
         </ul>
       </div>
-      {showInput && (
+      {showInput ?
+
         <>
+        {pseudSuccess === true ? <p className="text-align-center">Ton pseudo a bien été enregistré</p> : null}
+        {pseudError === true ? <p className="text-align-center">Une erreur est survenue</p> : null}
         <form className="form-create-pseudo" onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor="pseudo">Saisi ton pseudo pour {selectedGame}</label>
           <input type="text" name="pseudo" id="pseudo" {...register("pseudo", { required: true, minLength: 2, pattern: /^(?!.*script\s)/ })} />
           {errors.pseudo && <p>*le prenom doit contenir au moins 2 caractères</p>}
             <input type="submit" value="Valider" />
         </form>
-        <div className="text-align-center">
+        <div className="text-align-center" >
           <Link to={`/graph/${userId}`}>Suivant</Link>
         </div>
         </>
-      )}
+        : null}
 
     </>
   )
