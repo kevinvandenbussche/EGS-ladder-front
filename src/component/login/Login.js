@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { ENTRYPOINT } from '../../config.js';
 import{useForm} from 'react-hook-form';
@@ -9,19 +9,14 @@ import '../login/login.scss';
 import { linkStyle } from '../../asset/linkstyle.js';
 import { Error } from '../error/Error.js';
 
-
 export function Login(){
     const [error, setError] = useState(false);
-    const [load, setLoad] = useState(false);
     const {handleSubmit, register, formState :  {errors} } = useForm();
     const entrypoint = ENTRYPOINT;
     const navigate = useNavigate();
     const location = useLocation();
 
     const onSubmit = (data)=>{
-        const event = new Event('submit');
-        event.preventDefault();
-        setLoad(true);
         let url = entrypoint + 'login';
         fetch( url ,   {
             method: 'POST',
@@ -43,6 +38,9 @@ export function Login(){
             }else if (response.token){
                 const decoded = jwt_decode(response.token);
                 localStorage.setItem('token', response.token);
+                localStorage.setItem('userId', decoded.id);
+                localStorage.setItem('firstname', decoded.firstname);
+                localStorage.setItem('role', decoded.roles[0])
                 const userId = decoded.id;
                 if(decoded.roles[0] === 'ROLE_ADMIN'){
                     navigate('/user-management');
@@ -56,7 +54,6 @@ export function Login(){
                     navigate('/graph/' + userId);
                 }  
             }
-            setLoad(false);
         })
         .catch((error) => {
             setError(true);

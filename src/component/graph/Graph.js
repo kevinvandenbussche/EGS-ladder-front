@@ -3,6 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Line } from 'react-chartjs-2';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ENTRYPOINT } from '../../config.js';
+import { Header } from '../header/Header.js';
 
 export function Graph(){
     const location = useLocation();
@@ -102,6 +103,7 @@ export function Graph(){
       };    
     return(
       <>
+        <Header />
         <h1 className='text-align-center'>Mon suivi</h1>
         <ul>
         {games.map(game => {
