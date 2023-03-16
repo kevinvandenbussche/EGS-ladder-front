@@ -40,7 +40,7 @@ export function FormUser() {
         if(formSubmitted){
             setLoad(true);
             let url = entrypoint;
-            url += 'api/users';
+            url += 'api/create-user';
             fetch( url ,   {
                 method: 'POST',
                 headers: {
