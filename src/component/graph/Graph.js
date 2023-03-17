@@ -1,14 +1,13 @@
 import { useEffect, useState} from 'react';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ENTRYPOINT } from '../../config.js';
 import { Header } from '../header/Header.js';
+import { Link } from 'react-router-dom';
 
 export function Graph(){
-    const location = useLocation();
-    const param = location.pathname.split('/')[2];
-    const idUser = param;
+    const [idUser] = useState(localStorage.getItem('userId'));
     const entrypoint = ENTRYPOINT;
     const [datas, setdatas] = useState([]);
     const navigate = useNavigate();
@@ -36,8 +35,6 @@ export function Graph(){
         
       )
       if(idGame !== 0){
-        console.log('idgameazeaze',idGame)
-        console.log(games)
         const url = entrypoint + 'api/find-elo-by-user/' + idUser+ '/' + idGame;
         fetch( url ,   { headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -105,6 +102,7 @@ export function Graph(){
       <>
         <Header />
         <h1 className='text-align-center'>Mon suivi</h1>
+        <Link to={`/select-game/${idUser}`}>Mettre à jour mes Pseudo</Link>
         <ul>
         {games.map(game => {
           return(

@@ -3,20 +3,18 @@ import { ENTRYPOINT } from '../../config';
 import { useForm } from 'react-hook-form';
 import "../selectGame/selectGame.scss";
 import { Link } from "react-router-dom";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
 export function SelectGame() {
-  const location = useLocation();
-  const paramUserId = location.pathname.split('/')[2];
   const [data, setData] = useState([]); 
   const { handleSubmit, register, formState: { errors } } = useForm();
   const [formData, setFormData] = useState({});
   const [showInput, setShowInput] = useState(false);
   const [selectedGame, setSelectedGame] = useState('');
   const [idGame, setIdGame] = useState(0);
-  const [userId] = useState(paramUserId);
+  const [userId] = useState(localStorage.getItem('userId'));
   const [popIn, setPopIn] = useState(true);
   const navigate = useNavigate();
   const [pseudSuccess, setPseudSuccess] = useState(false);
@@ -61,9 +59,11 @@ export function SelectGame() {
     })
     
   }
-
+  console.log(JSON.stringify(formData));
   useEffect(() => {
     if(formData.pseudonyme){
+    setPseudSuccess(false);
+    setPseudError(false);
     fetch(ENTRYPOINT + 'api/to_plays', {
       method: 'POST',
       headers: {
@@ -74,8 +74,13 @@ export function SelectGame() {
       body: JSON.stringify(formData)
     })
     .then((response) => response.json())
-    .then(() => {
-      setPseudSuccess(true);
+    .then((response) => {
+      console.log(response);
+      if(response.accountId !== undefined){
+        setPseudSuccess(true);
+      }else{
+        setPseudError(true);
+      }
     })
     .catch(() => {
       setPseudError(true);
