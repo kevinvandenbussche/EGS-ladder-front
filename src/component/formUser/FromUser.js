@@ -40,12 +40,12 @@ export function FormUser() {
         if(formSubmitted){
             setLoad(true);
             let url = entrypoint;
-            url += 'api/create-user';
+            url += 'api/users';
             fetch( url ,   {
                 method: 'POST',
                 headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(formData)
             })
