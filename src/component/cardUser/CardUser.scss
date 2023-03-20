@@ -1,4 +1,4 @@
-@import '../../asset/generic';
+@import '../../asset/variable';
 
 .card-user{
     border: solid 2px $white;
@@ -39,6 +39,10 @@
         2px 0 10px #fff;
         transform: scale(1.02);
     }
+    @media screen and (max-width: 1000px) {
+        width: 45%;
+    }
+        
 }
 
 .search-barre{
