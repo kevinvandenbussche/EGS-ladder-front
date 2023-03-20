@@ -1,4 +1,4 @@
-@import '../../asset/generic';
+@import '../../asset/variable';
 
 
 .form-create-user{
@@ -15,6 +15,7 @@
     input[type="submit"]{
         @include inputSubmit;
     }
+    
     p{
         font-family: $font-axis;
         color: red;
@@ -24,7 +25,16 @@
         font-family: 'Roboto', sans-serif;
         padding-top: 5px;
     }
+    @media screen and (max-width: 1200px) {
+        width: 60%;
+        
+    }
+    @media screen and (max-width: 700px) {
+        width: 90%;
+        
+    }
 }
+
 
 
 

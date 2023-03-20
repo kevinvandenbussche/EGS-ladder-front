@@ -6,7 +6,7 @@ import { EditUserForm } from './component/editUserForm/EditUserForm.js';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { SelectGame } from './component/selectGame/SelectGame.js';
 import { Login } from './component/login/Login.js';
-
+import './asset/_generic.scss';
 
 
 function App() {

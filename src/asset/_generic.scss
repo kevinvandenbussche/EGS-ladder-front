@@ -1,4 +1,5 @@
-@import "variable";
+@import './variable';
+
 *{
     color: $white;
     margin: 0;
@@ -204,6 +205,10 @@ select{
   background: $pink;
 
 
+}
+
+.cursor-pointer{
+    cursor: pointer;
 }
 
 .glowing-btn:hover:after {
