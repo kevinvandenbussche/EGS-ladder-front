@@ -13,6 +13,7 @@ export function Graph(){
     const navigate = useNavigate();
     const [games, setGames] = useState([]);
     const [idGame, setIdGame] = useState(0);
+    const [gameName, setGameName] = useState('');
 
     useEffect(() =>{
       const urlGetGame = entrypoint + 'api/data-game';
@@ -29,7 +30,6 @@ export function Graph(){
           if(result.code === 401 || result.code === 403){
             navigate('/')
           }
-          console.log('result',result)
           setGames(result);
         }
         
@@ -52,10 +52,11 @@ export function Graph(){
         )
        }
     }, [idGame]);
-    const getIdGame = (e, gameId) => {
+        
+    const getIdGame = (e, gameId, gameName) => {
       setIdGame(gameId);
+      setGameName(gameName);
     }
-
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -71,7 +72,6 @@ export function Graph(){
           legend: {
             position: 'top',
             display:'false',
-            title:'zazeazeaze'
           },
           title: {
             display: true,
@@ -81,32 +81,34 @@ export function Graph(){
         },
       };
 
-      const labels = [];
+      const labels = [''];
       const elo = [];
       datas.forEach(data => {
-        labels.push(data.dateRegisterElo.date)
+        labels.push(data.dateRegisterElo)
         elo.push(data.elo)
       });
       const data = {
         labels,
         datasets: [
           {
+            label: gameName,        
             data: elo,
             backgroundColor: 'white',
             borderColor:'white',
-
-        }
+          }
         ],
       };    
     return(
       <>
         <Header />
         <h1 className='text-align-center'>Mon suivi</h1>
-        <Link to={`/select-game/${idUser}`}>Mettre à jour mes Pseudo</Link>
+        <div className='text-align-center'>
+          <Link to={`/select-game/${idUser}`}>Mettre à jour mes Pseudo</Link>
+        </div>
         <ul>
         {games.map(game => {
           return(
-              <li key={game.id} onClick={e=>getIdGame(e, game.id)}>{game.name}</li>
+              <li className='cursor-pointer' key={game.id} onClick={e=>getIdGame(e, game.id, game.name)}>{game.name}</li>
             )
           }
         )}
