@@ -7,7 +7,6 @@ import './editUserForm.scss'
 
 
 export function EditUserForm(props) {
-    console.log('je suis dans le form')
     //hook pour les input de fomrulaire
     const {handleSubmit, register, formState :  {errors}, setValue } = useForm();
     const entrypoint = ENTRYPOINT;
@@ -20,6 +19,7 @@ export function EditUserForm(props) {
     const [load, setLoad] = useState(false);
     const [userData, setUserData] = useState([]);
     const idUser = props.idUser;
+    const [message, setMessage] = useState(false);
 
     const onSubmit = (data)=>{
         setFormData({
@@ -27,20 +27,19 @@ export function EditUserForm(props) {
             roles: [
                 data.roles
               ],
-            password: data.password,
             name: data.name,
             firstname: data.firstname,
         })
         setFormSubmitted(true);
     };
-    console.log('coucouc')
-    console.log(formData)
+
     useEffect(() =>{
+            setLoad(true);
             let url = entrypoint;
             url += 'api/users/'+idUser;
             fetch( url ,   {
-                method: 'GET',
                 headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
@@ -54,6 +53,8 @@ export function EditUserForm(props) {
                 setValue("name", user.name);
                 setValue("firstname", user.firstname);
                 setValue("email", user.email);
+                setValue("roles", user.roles[0]);
+                setLoad(false);
             })
             .catch((error) => {
                 setError(true);
@@ -69,12 +70,26 @@ export function EditUserForm(props) {
             fetch( url ,   {
                 method: 'PATCH',
                 headers: {
-                'Accept': 'application/ld+json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'accept': 'application/ld+json',
                 'Content-Type': 'application/merge-patch+json'
                 },
                 body: JSON.stringify(formData)
             })
-            setFormSubmitted(false);
+
+            .then((data) => {
+                console.log(data.ok);
+                if(data.ok){
+                    setLoad(false);
+                    setMessage(true);
+                }else{
+                    setLoad(false);
+                    setError(true);
+                }
+            })
+            .catch(() => {
+                setError(true);
+            });
         } 
     }, [formData]);
 
@@ -88,7 +103,8 @@ export function EditUserForm(props) {
                 error === false ?
                     <>
                         <h2 className='text-align-center'>Modifier l'utilisateur</h2>
-                        <div className='flex justify-content-center'>
+                        {message === true ? <p className='text-align-center'>*l'utisateur a été mis à jour</p> : null}
+                        <div className='flex justify-content-center container-edit-form'>
                             <form  className = 'form-create-user'onSubmit={handleSubmit(onSubmit)}>
                                 <div>
                                     <label htmlFor="name">modifier nom </label>
@@ -111,22 +127,11 @@ export function EditUserForm(props) {
                                     </div>
                                     {errors.email && <p>*le mail n'est pas correct</p>}
                                 </div>
-                                {/* <div>
-                                    <label htmlFor ="password">modifier mot de passe</label>
-                                    <div className='container-input'>
-                                        <input type="password" name="password" id="password" onChange={e => setUserData({...userData, password: e.target.value})} {...register("password", {required:true, 
-                                                                                                                        minLength:6, 
-                                                                                                                        max:24, 
-                                                                                                                        pattern: /^(?!.*script\s)/
-                                                                                                                    })}/>
-                                    </div>
-                                    {errors.password && <p>*le mot de passe doit contenir au moins 6 caractères et 24 caractères maximnum</p>}
-                                </div> */}
                                 <div className='container-input'>
-                                    <select onChange={e => setUserData({...userData, roles: e.target.value})} type="select" id="roles" {...register("roles",{required:true, minLength:2, pattern: /^(ROLE_ADMIN|ROLE_STAFF|ROLE_USER)$(?!.*script)/})}>
-                                        <option value="ROLE_USER">user</option>
+                                    <select onChange={e => setUserData({...userData, roles: e.target.value})} type="select" id="roles" {...register("roles",{required:true, minLength:2, pattern: /^(ROLE_ADMIN|ROLE_COACH|ROLE_USER)$(?!.*script)/})}>
+                                        <option value="ROLE_USER">utilisateur</option>
                                         <option value="ROLE_ADMIN">administrateur</option>
-                                        <option value="ROLE_STAFF">staff</option>
+                                        <option value="ROLE_COACH">coach</option>
                                     </select>
                                 </div>
                                 <div>
