@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ENTRYPOINT } from '../../config.js';
 import { Header } from '../header/Header.js';
 import { Link } from 'react-router-dom';
+import { Message } from '../message/Message.js';
 
 export function Graph(){
     const [idUser] = useState(localStorage.getItem('userId'));
@@ -104,6 +105,7 @@ export function Graph(){
         <h1 className='text-align-center'>Mon suivi</h1>
         <div className='text-align-center'>
           <Link to={`/select-game/${idUser}`}>Mettre à jour mes Pseudo</Link>
+          {/* <Link to={`/message`}>Envoyer un message</Link> */}
         </div>
         <ul>
         {games.map(game => {
