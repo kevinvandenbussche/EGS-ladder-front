@@ -73,9 +73,9 @@ export function DetailPlayer(props){
                         <li></li>
                     </ul>
                     {toggleEdit === true ? 
-                        <>
+                        <div className='edit-user'>
                             <EditUserForm idUser={idUser}/>
-                        </>
+                        </div>
                     : 
                         <>
                             <div className='picture-profil'>
