@@ -59,7 +59,6 @@ export function SelectGame() {
     })
     
   }
-  console.log(JSON.stringify(formData));
   useEffect(() => {
     if(formData.pseudonyme){
     setPseudSuccess(false);
@@ -75,7 +74,6 @@ export function SelectGame() {
     })
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
       if(response.accountId !== undefined){
         setPseudSuccess(true);
       }else{
@@ -102,7 +100,7 @@ export function SelectGame() {
 
   return (
     <>
-      <h1 className="text-align-center title-select-game">Selectionnes tes jeux</h1>
+      <h1 className="text-align-center title-select-game">Selectionne tes jeux</h1>
       {popIn === true ? 
       <div className="tutorial">
         <ul onClick={close} className="cross">
