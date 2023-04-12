@@ -4,7 +4,7 @@ import './formUser.scss'
 import { ENTRYPOINT } from '../../config';
 import { Error } from '../error/Error.js';
 import { Load } from '../load/Load.js';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function FormUser() {
     //hook pour les input de formulaire
@@ -20,7 +20,6 @@ export function FormUser() {
     //pour la redirection
     const navigate = useNavigate();
     const [userId, setUserId] = useState(0);
-    const location = useLocation();
 
     const onSubmit = (data)=>{
         const event = new Event('submit');
@@ -36,6 +35,7 @@ export function FormUser() {
         })
         setFormSubmitted(true);
     };
+    
     useEffect(() =>{
         if(formSubmitted){
             setLoad(true);
